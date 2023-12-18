@@ -10,7 +10,7 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "meteor-node-stubs": "^1.2.1",
-    "mongodb": "^4.1.4"
+    "mongodb": "^4.17.2"
   },
   "meteor": {
     "mainModule": {
