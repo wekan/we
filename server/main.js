@@ -5,8 +5,9 @@ Meteor.startup(() => {
   // Code to run on server startup.
   console.log(`Greetings from ${module.id}!`);
 
-  // Replace the uri string with your MongoDB deployment's connection string.
+/* No MongoDB here, commenting out.
 
+  // Replace the uri string with your MongoDB deployment's connection string.
   const mongo = require('mongodb');
 
   const MongoClient = mongo.MongoClient;
@@ -35,6 +36,7 @@ Meteor.startup(() => {
     });
 
   });
+*/
 
 });
 
