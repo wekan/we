@@ -25,27 +25,8 @@ do
 			echo "Linux";
 			# Debian, Ubuntu, Mint
 			sudo apt-get install -y build-essential gcc g++ make git curl wget p7zip-full zip unzip unp npm
-			#curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-			#sudo apt-get install -y nodejs
-			#sudo apt-get install -y npm
-			# Volta Node and NPM install manager, made with Rust https://volta.sh
-			# Volta uses home directory also with "npm -g install", no sudo needed.
-			# Volta install script is broken, so using n.
-			#curl https://get.volta.sh | bash
-			#export VOLTA_HOME="$HOME/.volta"
-			#export PATH="$VOLTA_HOME/bin:$PATH"
-			#volta install node@14
-			# npm nodejs
-			#curl -0 -L https://npmjs.org/install.sh | sudo sh
-			#sudo chown -R $(id -u):$(id -g) $HOME/.npm
 			sudo npm -g install n
-			sudo n 14.19.1
-			#sudo npm -g install npm
-			## Latest npm with Meteor 2.2
-			sudo npm -g install node-gyp
-			# Latest fibers for Meteor 2.2
-			#sudo mkdir -p /usr/local/lib/node_modules/fibers/.node-gyp
-			sudo npm -g install fibers
+			sudo n 20.10.0
 			# Install Meteor, if it's not yet installed
 			sudo npm install -g meteor --unsafe-perm
 			#sudo chown -R $(id -u):$(id -g) $HOME/.npm $HOME/.meteor
@@ -93,14 +74,14 @@ do
 		;;
 
     "Run Meteor for dev on http://localhost:4000")
-		WRITABLE_PATH=.. NODE_OPTIONS="--max_old_space_size=4096 --trace-warnings" WITH_API=true RICHER_CARD_COMMENT_EDITOR=false ROOT_URL=http://localhost:4000 meteor run --exclude-archs web.browser.legacy,web.cordova --port 4000
+		NODE_OPTIONS="--max_old_space_size=4096 --trace-warnings" ROOT_URL=http://localhost:4000 meteor run --exclude-archs web.browser.legacy,web.cordova --port 4000
 		break
 		;;
 
     "Run Meteor for dev on http://CURRENT-IP-ADDRESS:4000")
 		IPADDRESS=$(ip a | grep 'noprefixroute' | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | cut -d '/' -f 1)
 		echo "Your IP address is $IPADDRESS"
-		WRITABLE_PATH=.. NODE_OPTIONS="--max_old_space_size=4096 --trace-warnings" WITH_API=true RICHER_CARD_COMMENT_EDITOR=false ROOT_URL=http://$IPADDRESS:4000 meteor run --exclude-archs web.browser.legacy,web.cordova --port 4000
+		NODE_OPTIONS="--max_old_space_size=4096 --trace-warnings" ROOT_URL=http://$IPADDRESS:4000 meteor run --exclude-archs web.browser.legacy,web.cordova --port 4000
 		break
 		;;
 
@@ -111,7 +92,7 @@ do
 		echo "On what port you would like to run?"
 		read PORT
 		echo "ROOT_URL=http://$IPADDRESS:$PORT"
-		WRITABLE_PATH=.. NODE_OPTIONS="--max_old_space_size=4096 --trace-warnings" WITH_API=true RICHER_CARD_COMMENT_EDITOR=false ROOT_URL=http://$IPADDRESS:$PORT meteor run --exclude-archs web.browser.legacy,web.cordova --port $PORT
+		NODE_OPTIONS="--max_old_space_size=4096 --trace-warnings" ROOT_URL=http://$IPADDRESS:$PORT meteor run --exclude-archs web.browser.legacy,web.cordova --port $PORT
 		break
 		;;
 
