@@ -91,9 +91,9 @@ do
                 chmod u+w *.json
 		meteor npm install
 		meteor build .build --directory
-		rm -rf .build/bundle/programs/web.browser.legacy
+		#rm -rf .build/bundle/programs/web.browser.legacy
 		(cd .build/bundle/programs/server && rm -rf node_modules && chmod u+w *.json && meteor npm install)
-                (cd .build/bundle/programs/server/node_modules/fibers && node build.js)
+                #(cd .build/bundle/programs/server/node_modules/fibers && node build.js)
 		# Cleanup
 		find . -type d -name '*-garbage*' | xargs rm -rf
 		find . -name '*phantom*' | xargs rm -rf
