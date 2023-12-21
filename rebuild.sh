@@ -14,12 +14,12 @@ function pause(){
 
 echo
 PS3='Please enter your choice: '
-options=("Install Wekan dependencies" "Build Wekan" "Run Meteor for dev on http://localhost:4000" "Run Meteor for dev on http://CURRENT-IP-ADDRESS:4000" "Run Meteor for dev on http://CUSTOM-IP-ADDRESS:PORT" "Quit")
+options=("Install dependencies" "Build" "Run Meteor for dev on http://localhost:4000" "Run Meteor for dev on http://CURRENT-IP-ADDRESS:4000" "Run Meteor for dev on http://CUSTOM-IP-ADDRESS:PORT" "Quit")
 
 select opt in "${options[@]}"
 do
     case $opt in
-        "Install Wekan dependencies")
+        "Install dependencies")
 
 		if [[ "$OSTYPE" == "linux-gnu" ]]; then
 			echo "Linux";
@@ -76,35 +76,18 @@ do
 		break
 		;;
 
-    "Build Wekan")
-		echo "Building Wekan."
-		#if [[ "$OSTYPE" == "darwin"* ]]; then
-		#	echo "sed at macOS";
-		#	sed -i '' 's/api\.versionsFrom/\/\/api.versionsFrom/' ~/repos/wekan/packages/meteor-useraccounts-core/package.js
-		#else
-		#	echo "sed at ${OSTYPE}"
-		#	sed -i 's/api\.versionsFrom/\/\/api.versionsFrom/' ~/repos/wekan/packages/meteor-useraccounts-core/package.js
-		#fi
-		#cd ..
-		#sudo chown -R $(id -u):$(id -g) $HOME/.npm $HOME/.meteor
+    "Build")
+		echo "Building."
 		rm -rf node_modules .meteor/local .build
                 chmod u+w *.json
 		meteor npm install
 		meteor build .build --directory
-		#rm -rf .build/bundle/programs/web.browser.legacy
 		(cd .build/bundle/programs/server && rm -rf node_modules && chmod u+w *.json && meteor npm install)
-                #(cd .build/bundle/programs/server/node_modules/fibers && node build.js)
 		# Cleanup
 		find . -type d -name '*-garbage*' | xargs rm -rf
 		find . -name '*phantom*' | xargs rm -rf
 		find . -name '.*.swp' | xargs rm -f
 		find . -name '*.swp' | xargs rm -f
-		# Add fibers multi arch
-		#cd .build/bundle/programs/server/node_modules/fibers/bin
-		#curl https://releases.wekan.team/fibers-multi.7z -o fibers-multi.7z
-		#7z x fibers-multi.7z
-		#rm fibers-multi.7z
-		#cd ../../../../../../..
 		echo Done.
 		break
 		;;
@@ -125,7 +108,7 @@ do
 		ip address
 		echo "From above list, what is your IP address?"
 		read IPADDRESS
-		echo "On what port you would like to run Wekan?"
+		echo "On what port you would like to run?"
 		read PORT
 		echo "ROOT_URL=http://$IPADDRESS:$PORT"
 		WRITABLE_PATH=.. NODE_OPTIONS="--max_old_space_size=4096 --trace-warnings" WITH_API=true RICHER_CARD_COMMENT_EDITOR=false ROOT_URL=http://$IPADDRESS:$PORT meteor run --exclude-archs web.browser.legacy,web.cordova --port $PORT
