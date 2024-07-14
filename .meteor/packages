@@ -11,3 +11,4 @@ webapp@2.0.0-rc300.8                  # Serves a Meteor app over HTTP
 server-render@0.4.2-rc300.8           # Support for server-side rendering
 hot-module-replacement@0.5.4-rc300.8  # Rebuilds the client if there is a change on the client without restarting the server
 zodern:remove-client-js@1.0.1-beta.5      # Remove clientside Javascript
+wekan-accounts-sandstorm
