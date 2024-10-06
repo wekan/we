@@ -49,6 +49,6 @@ templating-tools@2.0.0
 tracker@1.3.4
 typescript@5.4.3
 underscore@1.6.4
-webapp@2.0.1
+webapp@2.0.2
 webapp-hashing@1.1.2
 zodern:remove-client-js@1.0.1-beta.5
