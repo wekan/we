@@ -26,7 +26,7 @@ do
 			# Debian, Ubuntu, Mint
 			sudo apt-get install -y build-essential gcc g++ make git curl wget p7zip-full zip unzip unp npm
 			sudo npm -g install n
-			sudo n 20.10.0
+			sudo n 20.18.0
 			# Install Meteor, if it's not yet installed
 			sudo npm install -g meteor --unsafe-perm
 			#sudo chown -R $(id -u):$(id -g) $HOME/.npm $HOME/.meteor
