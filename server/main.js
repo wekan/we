@@ -8,35 +8,45 @@ Meteor.startup(() => {
 });
 
 onPageLoad(sink => {
-    async function run() {
-      try {
-        const dbname = "wekan";
-        const collectionname = "users";
-        const uri = "mongodb://127.0.0.1:27019";
-        const client = new MongoClient(uri);
-        // Connect the client to the server
-        await client.connect();
-        // Send a ping to confirm a successful connection
-        await client.db(dbname).command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
-        const database = client.db(dbname);
-        const query = {};
-        const options = {};
-        const users = database.collection(collectionname);
-        const user = await users.findOne(query, options);
-        Meteor.settings.username = user.username;
-        console.log(user.username);
-     } finally {
-        // Ensures that the client will close when you finish/error
-        //if (client) {
-        //  await client.close();
-        //}
-      }
-    }
-    run().catch(console.dir);
+  const dbname = "wekan";
+  const collectionname = "users";
+  const uri = "mongodb://127.0.0.1:27019";
 
+  async function queryMongoDB() {
+    const client = new MongoClient(uri);
+    await client.connect();
+    const database = client.db(dbname);
+    const query = {};
+    const options = {};
+    const users = database.collection(collectionname);
+    const user = await users.findOne(query, options);
+    return user.username;
+  }
+
+  async function main() {
+    Meteor.settings.username = await queryMongoDB();
+    console.log(Meteor.settings.username);
+  }
+
+  function wait(seconds) {
+    return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+  }
+
+  main();
+
+  sink.renderIntoElementById(
+    "server-render-target",
+    `User: ${Meteor.settings.username} (defined after loading 2 times), server time: ${new Date}`
+  );
+
+  // If waiting for 2 seconds, does not show anything.
+  wait(2)
+  .then(() => {
+    console.log('2 seconds have passed!');
     sink.renderIntoElementById(
-      "server-render-target",
-      `Server time: ${new Date}, User: ${Meteor.settings.username}`
+      "server-render-target2",
+      `User: ${Meteor.settings.username}, Waited 2 seconds, server time: ${new Date}`
     );
+  });
+
 });
