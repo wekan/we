@@ -7,7 +7,7 @@ Meteor.startup(() => {
   console.log(`Greetings from ${module.id}!`);
 });
 
-onPageLoad(sink => {
+onPageLoad(async sink => {
   const dbname = "wekan";
   const collectionname = "users";
   const uri = "mongodb://127.0.0.1:27019";
@@ -32,14 +32,17 @@ onPageLoad(sink => {
     return new Promise(resolve => setTimeout(resolve, seconds * 1000));
   }
 
-  main();
+  await main();
 
+  // User is now defined at 1st load, thanks for fix to minhna !
+  // https://forums.meteor.com/t/renderintoelementbyid-does-not-wait-for-mongodb-3-x-query-results-what-to-do-solved/62372/5
   sink.renderIntoElementById(
     "server-render-target",
-    `User: ${Meteor.settings.username} (defined after loading 2 times), server time: ${new Date}`
+    `User: ${Meteor.settings.username}, server time: ${new Date}`
   );
 
-  // If waiting for 2 seconds, does not show anything.
+/*
+  // If waiting for 2 seconds, shows at console log, but not at browser.
   wait(2)
   .then(() => {
     console.log('2 seconds have passed!');
@@ -48,5 +51,6 @@ onPageLoad(sink => {
       `User: ${Meteor.settings.username}, Waited 2 seconds, server time: ${new Date}`
     );
   });
+*/
 
 });
