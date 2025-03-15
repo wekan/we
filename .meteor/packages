@@ -7,7 +7,7 @@
 meteor@2.1.0                  # Shared foundation for all Meteor packages
 static-html@1.4.0             # Define static page content in .html files
 ecmascript@0.16.10             # Enable ECMAScript2015+ syntax in app code
-webapp@2.0.4                  # Serves a Meteor app over HTTP
+webapp@2.0.5                  # Serves a Meteor app over HTTP
 server-render@0.4.2           # Support for server-side rendering
 hot-module-replacement@0.5.4  # Rebuilds the client if there is a change on the client without restarting the server
 zodern:remove-client-js@1.0.1-beta.5      # Remove clientside Javascript
